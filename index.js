@@ -1,3 +1,4 @@
+import "express-async-errors";
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
@@ -5,12 +6,20 @@ import dotenv from "dotenv";
 
 import connectDB from "./config/db.js";
 
+import { errorMiddleware } from "./middleware/error-handler.js";
+
 const app = express();
 dotenv.config();
 
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
+
+// middlewares for error handling
+app.use((req, res) =>
+  res.status(404).json({ message: "Route does not exists" })
+);
+app.use(errorMiddleware);
 
 // connect to mongodb
 connectDB();

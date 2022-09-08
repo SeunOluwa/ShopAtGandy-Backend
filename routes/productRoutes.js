@@ -1,6 +1,11 @@
 import express from "express";
 
-import { createProduct, getProduct, getProducts } from "../controllers/productControllers.js";
+import {
+  createProduct,
+  getProduct,
+  getProducts,
+  updateProduct,
+} from "../controllers/productControllers.js";
 
 import userAuth from "../middleware/userAuth.js";
 
@@ -13,6 +18,13 @@ import { createProductValidator } from "../validators/productValidator.js";
 router.get("/", getProducts);
 router.get("/:slug", getProduct);
 
-router.post("/upload", userAuth, createProductValidator, runValidation, createProduct);
+router.post(
+  "/upload",
+  userAuth,
+  createProductValidator,
+  runValidation,
+  createProduct
+);
+router.patch("/:id/update", userAuth, updateProduct);
 
 export default router;

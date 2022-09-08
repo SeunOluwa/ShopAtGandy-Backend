@@ -63,3 +63,18 @@ export const updateProduct = async (req, res) => {
 
   res.json({ updatedProduct });
 };
+
+export const deleteProduct = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id))
+    throw new NotFound("No content with that id");
+
+  const product = await Product.findById(id);
+
+  if (!product) throw new NotFound("product not found");
+
+  await Product.findByIdAndRemove(id);
+
+  res.json({ message: "Product deleted successfully" });
+};

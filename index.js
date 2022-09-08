@@ -8,6 +8,7 @@ import connectDB from "./config/db.js";
 
 // Routes
 import userRoutes from "./routes/userRoutes.js";
+import productRoutes from "./routes/productRoutes.js";
 
 import { errorMiddleware } from "./middleware/error-handler.js";
 
@@ -20,6 +21,7 @@ app.use(cors());
 
 // Middlewares
 app.use("/user", userRoutes);
+app.use("/products", productRoutes);
 
 // middlewares for error handling
 app.use((req, res) =>

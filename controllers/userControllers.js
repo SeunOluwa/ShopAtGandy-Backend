@@ -5,9 +5,7 @@ import dotenv from "dotenv";
 import User from "../models/user.js";
 import {
   BadRequest,
-  Forbidden,
   NotFound,
-  Unauthenticated,
 } from "../errors/custom-errors.js";
 
 dotenv.config();
@@ -72,4 +70,25 @@ export const signin = async (req, res) => {
   delete userObject.password;
 
   res.status(200).json({ signedin_user: userObject, token });
+};
+
+export const resetPassword = async (req, res) => {
+  const { email, newPassword, confirmNewPassword } = req.body;
+
+  const existingUser = await User.findOne({ email });
+
+  if (!existingUser) throw new NotFound("User does not exist");
+
+  if (newPassword !== confirmNewPassword)
+    throw new BadRequest("Password don't match");
+
+  const hashedPassword = await bcrypt.hash(newPassword, 12);
+
+  const updatedUser = await User.updateOne(
+    { email },
+    { $set: { password: hashedPassword } },
+    { new: true }
+  );
+
+  res.status(200).json({ reset_password_message: updatedUser });
 };

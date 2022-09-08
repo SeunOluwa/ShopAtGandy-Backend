@@ -16,3 +16,10 @@ export const userSigninValidator = [
     .isLength({ min: 6 })
     .withMessage("Password must be at least 6 characters long"),
 ];
+
+export const userResetPasswordValidator = [
+  check("email").isEmail().withMessage("Must be a valid email address"),
+  check("newPassword")
+    .isLength({ min: 6 })
+    .withMessage("Password must be at least 6 characters long"),
+];

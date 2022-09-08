@@ -20,7 +20,19 @@ export const createProduct = async (req, res) => {
 };
 
 export const getProducts = async (req, res) => {
-  const products = await Product.find().select("_id name details price image");
+  const products = await Product.find().select("_id name details price image slug");
 
   res.status(200).json({ products });
+};
+
+export const getProduct = async (req, res) => {
+  const { slug } = req.params;
+
+  const product = await Product.findOne({ slug }).select(
+    "_id name details price image slug"
+  );
+
+  if (!product) throw new NotFound("product not found");
+
+  res.status(200).json({ product });
 };

@@ -6,6 +6,9 @@ import dotenv from "dotenv";
 
 import connectDB from "./config/db.js";
 
+// Routes
+import userRoutes from "./routes/userRoutes.js";
+
 import { errorMiddleware } from "./middleware/error-handler.js";
 
 const app = express();
@@ -14,6 +17,9 @@ dotenv.config();
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
+
+// Middlewares
+app.use("/user", userRoutes);
 
 // middlewares for error handling
 app.use((req, res) =>

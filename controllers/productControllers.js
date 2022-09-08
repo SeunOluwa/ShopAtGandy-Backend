@@ -18,3 +18,9 @@ export const createProduct = async (req, res) => {
 
   res.status(201).json(newProduct);
 };
+
+export const getProducts = async (req, res) => {
+  const products = await Product.find().select("_id name details price image");
+
+  res.status(200).json({ products });
+};

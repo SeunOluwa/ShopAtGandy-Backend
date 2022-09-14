@@ -1,12 +1,14 @@
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
 import User from "../models/user.js";
+
 import {
   BadRequest,
   NotFound,
 } from "../errors/custom-errors.js";
+
+import generateTokens from "../utils/generateTokens.js";
 
 dotenv.config();
 
@@ -57,19 +59,13 @@ export const signin = async (req, res) => {
 
   if (!isPasswordCorrect) throw new BadRequest("Invalid credentials.");
 
-  const token = jwt.sign(
-    {
-      id: existingUser._id,
-    },
-    process.env.SECRET_KEY,
-    { expiresIn: "1h" }
-  );
+  const { accessToken, refreshToken } = await generateTokens(existingUser);
 
   // exclude password field from response
   const userObject = existingUser.toObject();
   delete userObject.password;
 
-  res.status(200).json({ signedin_user: userObject, token });
+  res.status(200).json({ signedin_user: userObject, accessToken, refreshToken });
 };
 
 export const resetPassword = async (req, res) => {

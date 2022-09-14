@@ -10,6 +10,7 @@ import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import refreshTokenRoutes from "./routes/refreshTokenRoutes.js";
+import transactionRoutes from "./routes/transactionRoutes.js";
 
 import { errorMiddleware } from "./middleware/error-handler.js";
 
@@ -24,6 +25,7 @@ app.use(cors());
 app.use("/user", userRoutes);
 app.use("/products", productRoutes);
 app.use("/refresh-token", refreshTokenRoutes);
+app.use("/paystack", transactionRoutes);
 
 // middlewares for error handling
 app.use((req, res) =>

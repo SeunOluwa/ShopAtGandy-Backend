@@ -33,6 +33,10 @@ app.use((req, res) =>
 );
 app.use(errorMiddleware);
 
+app.get("/", (req, res) => {
+  res.send("APP IS WORKING.");
+});
+
 // connect to mongodb
 connectDB();
 

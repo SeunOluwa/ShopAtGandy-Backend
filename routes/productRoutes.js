@@ -8,8 +8,6 @@ import {
   updateProduct,
 } from "../controllers/productControllers.js";
 
-import userAuth from "../middleware/userAuth.js";
-
 const router = express.Router();
 
 // validators
@@ -19,14 +17,8 @@ import { createProductValidator } from "../validators/productValidator.js";
 router.get("/", getProducts);
 router.get("/:slug", getProduct);
 
-router.post(
-  "/upload",
-  userAuth,
-  createProductValidator,
-  runValidation,
-  createProduct
-);
-router.patch("/:id/update", userAuth, updateProduct);
-router.delete("/:id/delete", userAuth, deleteProduct);
+router.post("/upload", createProductValidator, runValidation, createProduct);
+router.patch("/:id/update", updateProduct);
+router.delete("/:id/delete", deleteProduct);
 
 export default router;

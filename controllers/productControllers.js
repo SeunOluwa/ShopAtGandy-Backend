@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 import Product from "../models/product.js";
 
-import { Forbidden, NotFound } from "../errors/custom-errors.js";
+import { NotFound } from "../errors/custom-errors.js";
 
 export const createProduct = async (req, res) => {
   const { name, details, price, image } = req.body;

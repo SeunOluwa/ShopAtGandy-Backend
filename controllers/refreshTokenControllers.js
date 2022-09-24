@@ -6,7 +6,7 @@ export const newAccessToken = async (req, res) => {
 
   verifyRefreshToken(refreshToken)
     .then(({ tokenDetails }) => {
-      const payload = { id: tokenDetails.id };
+      const payload = { id: tokenDetails.id, name: tokenDetails.name };
       const accessToken = jwt.sign(
         payload,
         process.env.ACCESS_TOKEN_PRIVATE_KEY,

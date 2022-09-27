@@ -20,9 +20,9 @@ export const createProduct = async (req, res) => {
 };
 
 export const getProducts = async (req, res) => {
-  const products = await Product.find().select(
-    "_id name details price image slug"
-  );
+  const products = await Product.find()
+    .sort({ _id: -1 })
+    .select("_id name details price image slug");
 
   res.status(200).json({ products });
 };
